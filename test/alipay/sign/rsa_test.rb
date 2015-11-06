@@ -17,4 +17,9 @@ class Alipay::Sign::RSATest < Minitest::Test
   def test_verify_fail_when_sign_not_true
     assert !Alipay::Sign::RSA.verify?(TEST_RSA_PUBLIC_KEY, "danger#{@string}", @sign)
   end
+
+  def test_verify_ok_when_sign_not_strict
+    sign = Base64.encode64(Base64.strict_decode64(@sign))
+    assert Alipay::Sign::RSA.verify?(TEST_RSA_PUBLIC_KEY, @string, sign)
+  end
 end
